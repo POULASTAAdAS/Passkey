@@ -1,6 +1,6 @@
-package com.example
+package com.poulastaa
 
-import com.example.plugins.*
+import com.poulastaa.plugins.*
 import io.ktor.server.application.*
 
 fun main(args: Array<String>) {
