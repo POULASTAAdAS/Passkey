@@ -20,7 +20,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PassekyAppTheme {
-                AuthScreen()
+                AuthScreen(
+                    navigate = {
+
+                    }
+                )
             }
         }
     }

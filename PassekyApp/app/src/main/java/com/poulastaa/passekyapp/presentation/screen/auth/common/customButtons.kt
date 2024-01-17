@@ -1,5 +1,6 @@
 package com.poulastaa.passekyapp.presentation.screen.auth.common
 
+import android.graphics.ColorSpace
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,6 +17,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -86,6 +89,7 @@ fun CustomButton(
 
 @Composable
 fun ContinueButton(
+    isLoading: Boolean,
     text: String,
     onClick: () -> Unit
 ) {
@@ -103,12 +107,18 @@ fun ContinueButton(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = text,
-                modifier = Modifier
-                    .padding(5.dp),
-                color = PrimaryTextColor
-            )
+            if (isLoading)
+                CircularProgressIndicator(
+                    color = Color.White,
+                    strokeWidth = 1.5.dp
+                )
+            else
+                Text(
+                    text = text,
+                    modifier = Modifier
+                        .padding(5.dp),
+                    color = PrimaryTextColor
+                )
         }
     }
 }
@@ -131,7 +141,10 @@ private fun Preview() {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        ContinueButton(text = "Continue with Passkey") {
+        ContinueButton(
+            text = "Continue with Passkey",
+            isLoading = true
+        ) {
 
         }
     }

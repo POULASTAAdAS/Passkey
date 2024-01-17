@@ -24,7 +24,7 @@ data class PasskeyResponse(
 
 @Serializable
 data class Rp(
-    val name: String = "passekyapp",
+    val name: String = "PassekyApp",
     val id: String = BASE_URL.removePrefix("https://")
 )
 

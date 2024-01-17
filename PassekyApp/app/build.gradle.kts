@@ -88,4 +88,5 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
 
     implementation("androidx.credentials:credentials:1.3.0-alpha01")
+    implementation ("androidx.credentials:credentials-play-services-auth:1.3.0-alpha01")
 }
