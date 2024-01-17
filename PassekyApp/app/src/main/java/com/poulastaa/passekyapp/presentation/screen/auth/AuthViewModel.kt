@@ -20,7 +20,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.nio.charset.StandardCharsets
 import javax.inject.Inject
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
@@ -98,12 +101,26 @@ class AuthViewModel @Inject constructor(
                     CreatePasskeyResponseData::class.java
                 )
 
-                Log.d("responseData", responseData.toString()) // todo decode
+                Log.d(
+                    "clientDataJSON",
+                    decodeBase64(responseData.response.clientDataJSON)
+                )
+
+                Log.d(
+                    "attestationObject",
+                    decodeBase64(responseData.response.attestationObject)
+                )
             } catch (e: Exception) {
                 e.printStackTrace()
                 _state.tryEmit(AuthState.SignInFailure(message = e.message.toString()))
             }
         }
+    }
+
+    @OptIn(ExperimentalEncodingApi::class)
+    private fun decodeBase64(base64String: String): String {
+        val decodedBytes = Base64.UrlSafe.decode(base64String)
+        return String(decodedBytes, StandardCharsets.UTF_8)
     }
 
     private fun validateEmail() = Patterns.EMAIL_ADDRESS.matcher(email.value).matches()
