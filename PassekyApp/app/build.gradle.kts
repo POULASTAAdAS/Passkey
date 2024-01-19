@@ -87,6 +87,11 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp-urlconnection:4.4.1")
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
 
+    // Credentials manager
     implementation("androidx.credentials:credentials:1.3.0-alpha01")
-    implementation ("androidx.credentials:credentials-play-services-auth:1.3.0-alpha01")
+    implementation("androidx.credentials:credentials-play-services-auth:1.3.0-alpha01")
+
+    // cbor decoder encoder
+    implementation("com.google.iot.cbor:cbor:0.01.02")
+    implementation ("co.nstant.in:cbor:0.9")
 }

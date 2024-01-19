@@ -11,7 +11,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.poulastaa.passekyapp.data.model.AuthState
-import com.poulastaa.passekyapp.data.model.CreatePasskeyResponseData
+import com.poulastaa.passekyapp.data.model.PasskeyResponse
+import com.poulastaa.passekyapp.data.model.PublicKeyCredentialResponse
 import com.poulastaa.passekyapp.data.model.UserInfo
 import com.poulastaa.passekyapp.domain.repository.PasskeyRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +21,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import okio.ByteString.Companion.decodeBase64
+import okio.ByteString.Companion.encode
 import java.nio.charset.StandardCharsets
 import javax.inject.Inject
 import kotlin.io.encoding.Base64
@@ -50,6 +53,8 @@ class AuthViewModel @Inject constructor(
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             val reqJson = passkeyReq()
+
+            Log.d("reqJson", reqJson)
 
             if (reqJson.isNotEmpty())
                 createPasskey(reqJson, activity)
@@ -96,20 +101,14 @@ class AuthViewModel @Inject constructor(
                     )
                 )
 
-                val responseData = gson.fromJson(
-                    (result as CreatePublicKeyCredentialResponse).registrationResponseJson,
-                    CreatePasskeyResponseData::class.java
-                )
+                val json = (result as CreatePublicKeyCredentialResponse).registrationResponseJson
 
-                Log.d(
-                    "clientDataJSON",
-                    decodeBase64(responseData.response.clientDataJSON)
-                )
+                val passkeyResponse = gson.fromJson(
+                    json,
+                    PublicKeyCredentialResponse::class.java
+                ).toPasskeyResponse()
 
-                Log.d(
-                    "attestationObject",
-                    decodeBase64(responseData.response.attestationObject)
-                )
+
             } catch (e: Exception) {
                 e.printStackTrace()
                 _state.tryEmit(AuthState.SignInFailure(message = e.message.toString()))
@@ -117,11 +116,21 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    @OptIn(ExperimentalEncodingApi::class)
-    private fun decodeBase64(base64String: String): String {
-        val decodedBytes = Base64.UrlSafe.decode(base64String)
-        return String(decodedBytes, StandardCharsets.UTF_8)
-    }
-
     private fun validateEmail() = Patterns.EMAIL_ADDRESS.matcher(email.value).matches()
+
+    private fun PublicKeyCredentialResponse.toPasskeyResponse(): PasskeyResponse =
+        PasskeyResponse( // todo encode then send
+            id = this.id,
+            rawId = this.rawId,
+            type = this.type,
+            attestationObject = this.response.attestationObject,
+            authenticatorAttachment = this.authenticatorAttachment,
+            clientDataJSON = this.response.clientDataJSON
+        )
+
+
+    @OptIn(ExperimentalEncodingApi::class)
+    fun ByteArray.b64Encode(): String {
+        return Base64.UrlSafe.encode(this)
+    }
 }
