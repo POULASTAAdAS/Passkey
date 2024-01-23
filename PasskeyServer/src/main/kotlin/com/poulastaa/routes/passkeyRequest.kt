@@ -1,9 +1,7 @@
 package com.poulastaa.routes
 
-import com.poulastaa.data.model.Endpoints
-import com.poulastaa.data.model.PasskeyResponse
-import com.poulastaa.data.model.User
-import com.poulastaa.data.model.UserInfo
+import com.poulastaa.data.model.*
+import com.poulastaa.users
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -18,12 +16,28 @@ fun Route.passkeyRequest() {
                 status = HttpStatusCode.BadRequest
             )
 
+            if (users.keys().toList().contains(userInfo.email)) {
+                call.respond(
+                    message = GetPasskeyResponse(
+                        allowCredentials = listOf(
+                            GetPasskeyResponse.AllowCredentials(
+                                id = users[userInfo.email]!!.id,
+                                transports = listOf(),
+                                type = "public-key"
+                            )
+                        )
+                    ),
+                    status = HttpStatusCode.OK
+                )
+
+                return@post
+            }
 
             call.respond(
-                message = PasskeyResponse(
-                    user = User(
+                message = CreatePasskeyResponse(
+                    user = CreatePasskeyResponse.User(
                         name = userInfo.email,
-                        displayName = userInfo.userName
+                        displayName = userInfo.displayName
                     )
                 ),
                 status = HttpStatusCode.OK

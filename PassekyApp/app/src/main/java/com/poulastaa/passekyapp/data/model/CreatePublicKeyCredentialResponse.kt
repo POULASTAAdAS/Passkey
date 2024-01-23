@@ -3,7 +3,7 @@ package com.poulastaa.passekyapp.data.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PublicKeyCredentialResponse(
+data class CreatePublicKeyCredentialResponse(
     val rawId: String,
     val authenticatorAttachment: String,
     val type: String,

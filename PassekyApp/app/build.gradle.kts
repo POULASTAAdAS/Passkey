@@ -92,6 +92,5 @@ dependencies {
     implementation("androidx.credentials:credentials-play-services-auth:1.3.0-alpha01")
 
     // cbor decoder encoder
-    implementation("com.google.iot.cbor:cbor:0.01.02")
-    implementation ("co.nstant.in:cbor:0.9")
+    implementation("com.upokecenter:cbor:4.5.2")
 }
