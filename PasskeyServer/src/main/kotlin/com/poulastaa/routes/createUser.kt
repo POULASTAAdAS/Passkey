@@ -21,28 +21,6 @@ fun Route.createUser() {
             // not checking if user exists cause it should happen on passkeyRequest route
             try {
                 users[user.email] = user
-                println("${user.publicKey}\n")
-                println("${user.publicKey}\n")
-                println("${user.publicKey}\n")
-                println("${user.publicKey}\n")
-                println("${user.publicKey}\n")
-                println("${user.publicKey}\n")
-                println("${user.publicKey}\n")
-                println("${user.publicKey}\n")
-                println("${user.publicKey}\n")
-                println("${user.publicKey}\n")
-                println("${user.publicKey}\n")
-                println("${user.publicKey}\n")
-                println("${user.publicKey}\n")
-                println("${user.publicKey}\n")
-                println("${user.publicKey}\n")
-                println("${user.publicKey}\n")
-                println("${user.publicKey}\n")
-                println("${user.publicKey}\n")
-                println("${user.publicKey}\n")
-                println("${user.publicKey}\n")
-                println("${user.publicKey}\n")
-                println("${user.publicKey}\n")
 
                 call.respond(
                     message = UserCreationResponse(
