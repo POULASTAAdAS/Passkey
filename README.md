@@ -5,7 +5,7 @@ Passkey Integration for android with ktor
 ### Note
 
 <p>You need to have https request to use Passkey.</p>
-<p>Try using ngrak if you are broke like me :)</p>
+You can use ngrak if you are broke like me :)
 
 ## Install
 
@@ -21,7 +21,7 @@ Passkey Integration for android with ktor
 <table>
     <tr>
         <td>
-            <img scr='https://github.com/POULASTAAdAS/Passkey/blob/main/ss/showcase-gif.gif'  width="320" height="620">
+            <img scr="https://github.com/POULASTAAdAS/Passkey/blob/main/ss/showcase-gif.gif"  width="320" height="620">
         </td>
     </tr>
 </table>
