@@ -18,7 +18,7 @@ You can use ngrak if you are broke like me :)
 
 # Perview
 
-![Showcase](https://github.com/POULASTAAdAS/Passkey/raw/main/ss/showcase-gif.gif)
+<img src="https://github.com/POULASTAAdAS/Passkey/raw/main/ss/showcase-gif.gif" width="320" height="620">
 
 # License
 
