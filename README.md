@@ -5,11 +5,11 @@ Passkey Integration for android with ktor
 ### Note
 
 <p>You need to have https request to use Passkey.</p>
-<p>Try using [ngrak](https://ngrok.com/) if you are broke like me :)</p>
+<p>Try using ngrak if you are broke like me :)</p>
 
 ## Install
 
-1. create a ngrok account.
+1. create a ngrok [account](https://ngrok.com/).
 2. follow the instructions on https://dashboard.ngrok.com/get-started/setup/windows
 3. start a proxy server. Ex: ngrok http http://localhost:8080
 4. Replace the urls on [Server](https://github.com/POULASTAAdAS/Passkey/blob/main/PasskeyServer/src/main/kotlin/com/poulastaa/utils/Constants.kt) and App [Constants](https://github.com/POULASTAAdAS/Passkey/blob/main/PassekyApp/app/src/main/java/com/poulastaa/passekyapp/utils/Constants.kt) , [string.xml](https://github.com/POULASTAAdAS/Passkey/blob/main/PassekyApp/app/src/main/res/values/strings.xml)
@@ -21,7 +21,7 @@ Passkey Integration for android with ktor
 <table>
     <tr>
         <td>
-            <img scr='https://github.com/POULASTAAdAS/Passkey/blob/main/ss/showcase-gif.gif'>
+            <img scr='https://github.com/POULASTAAdAS/Passkey/blob/main/ss/showcase-gif.gif'  width="320" height="620">
         </td>
     </tr>
 </table>
