@@ -1,8 +1,6 @@
 package com.poulastaa.passekyapp.data.repository
 
 import android.util.Log
-import androidx.credentials.CredentialManager
-import com.google.gson.Gson
 import com.poulastaa.passekyapp.data.model.GetUserRequest
 import com.poulastaa.passekyapp.data.model.User
 import com.poulastaa.passekyapp.data.model.UserCreationResponse
@@ -22,7 +20,7 @@ class PasskeyRepositoryImpl @Inject constructor(
 
             response
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.d("error", e.message.toString())
             null
         }
     }

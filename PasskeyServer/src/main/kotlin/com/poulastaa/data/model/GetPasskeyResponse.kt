@@ -10,7 +10,7 @@ data class GetPasskeyResponse(
     val allowCredentials: List<AllowCredentials>,
     val timeout: Long = 1800000,
     val userVerification: String = "required",
-    val rpId: String = Constants.BASE_URL.removePrefix("https://")
+    val rpId: String = Constants.BASE_URL.removePrefix("https://"),
 ) : BaseModel(type = "LogIn") {
     @Serializable
     data class AllowCredentials(

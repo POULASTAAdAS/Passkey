@@ -2,6 +2,7 @@ package com.poulastaa.passekyapp.presentation.screen.auth
 
 import android.app.Activity
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,7 +37,7 @@ import com.poulastaa.passekyapp.presentation.screen.auth.common.CustomTextField
 @Composable
 fun AuthScreen(
     viewModel: AuthViewModel = hiltViewModel(),
-    navigate: (String) -> Unit
+    navigate: (String) -> Unit,
 ) {
     val uiState = viewModel.state.collectAsState(initial = AuthState.Default).value
 
@@ -49,7 +50,11 @@ fun AuthScreen(
         when (uiState) {
             is AuthState.Default -> Unit
             is AuthState.SignInFailure -> {
-                Log.e("SignInFailure", uiState.message)
+                Toast.makeText(
+                    context,
+                    uiState.message,
+                    Toast.LENGTH_LONG
+                ).show()
             }
 
             is AuthState.SignInSuccess -> {
@@ -57,7 +62,11 @@ fun AuthScreen(
             }
 
             is AuthState.SignUpFailure -> {
-                Log.e("SignUpFailure", uiState.message)
+                Toast.makeText(
+                    context,
+                    uiState.message,
+                    Toast.LENGTH_LONG
+                ).show()
             }
 
             is AuthState.SignUpSuccess -> {
@@ -162,7 +171,7 @@ fun AuthScreenContent(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun Preview() {
     AuthScreenContent(

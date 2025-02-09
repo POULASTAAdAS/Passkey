@@ -1,9 +1,8 @@
 package com.poulastaa
 
-import com.poulastaa.data.model.CreatePasskeyResponse
-import com.poulastaa.data.model.Ids
 import com.poulastaa.data.model.User
-import com.poulastaa.plugins.*
+import com.poulastaa.plugins.configureRouting
+import com.poulastaa.plugins.configureSerialization
 import io.ktor.server.application.*
 import java.util.concurrent.ConcurrentHashMap
 

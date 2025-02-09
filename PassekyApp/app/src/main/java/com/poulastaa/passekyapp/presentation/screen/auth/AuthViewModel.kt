@@ -8,6 +8,7 @@ import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetPublicKeyCredentialOption
 import androidx.credentials.PublicKeyCredential
+import androidx.credentials.exceptions.CreateCredentialException
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
@@ -54,7 +55,7 @@ class AuthViewModel @Inject constructor(
     }
 
     fun onDone(
-        activity: Activity
+        activity: Activity,
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             val reqJson = passkeyReq()
@@ -107,17 +108,17 @@ class AuthViewModel @Inject constructor(
 
     private fun createPasskey(
         reqJson: String,
-        activity: Activity
+        activity: Activity,
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val result = credentialManager.createCredential(
                     context = activity,
                     request = CreatePublicKeyCredentialRequest(
-                        requestJson = reqJson
+                        requestJson = reqJson,
+                        origin = ORIGIN,
                     )
                 )
-
                 val json =
                     (result as androidx.credentials.CreatePublicKeyCredentialResponse).registrationResponseJson
                 val createPublicKeyCredentialResponse = gson.fromJson(
@@ -131,22 +132,21 @@ class AuthViewModel @Inject constructor(
                     ).checkValidity()
                 ) {
                     // create user and send to server
-                    val response =
-                        createPublicKeyCredentialResponse.toUser(
-                            email = email.value.trim()
-                        ).sendUserToServer()
+                    val response = createPublicKeyCredentialResponse.toUser(
+                        email = email.value.trim()
+                    ).sendUserToServer()
 
                     if (response.status) {
-                        //todo handle successful SignIn
-                        println("SignedIn")
+                        _state.emit(AuthState.SignUpSuccess)
                     } else {
                         // Congratulations You are fucked
                     }
                 } else {
                     // Congratulations You are fucked
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
+
+            } catch (e: CreateCredentialException) {
+                Log.d("SignUpError", e.message.toString())
                 _state.tryEmit(AuthState.SignInFailure(message = e.message.toString()))
             }
         }
@@ -155,7 +155,7 @@ class AuthViewModel @Inject constructor(
 
     private fun logIn(
         resJson: String,
-        activity: Activity
+        activity: Activity,
     ) {
         val option = GetPublicKeyCredentialOption(
             requestJson = resJson

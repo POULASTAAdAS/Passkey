@@ -3,7 +3,6 @@ package com.poulastaa.data.model
 import com.poulastaa.utils.Constants.BASE_URL
 import com.poulastaa.utils.generateFidoChallenge
 import kotlinx.serialization.Serializable
-import java.security.SecureRandom
 import java.util.*
 
 @Serializable
@@ -12,17 +11,24 @@ data class CreatePasskeyResponse(
     val rp: Rp = Rp(),
     val user: User,
     val pubKeyCredParams: List<PubKeyCredParams> = listOf(
-        PubKeyCredParams()
+        PubKeyCredParams(
+            type = "public-key",
+            alg = -7
+        ),
+        PubKeyCredParams(
+            type = "public - key",
+            alg = -257
+        )
     ),
     val timeout: Long = 1800000,
     val attestation: String = "none",
     val excludeCredentials: List<ExcludeCredentials> = emptyList(),
-    val authenticatorSelection: AuthenticatorSelection = AuthenticatorSelection()
-): BaseModel(type = "SignUp") {
+    val authenticatorSelection: AuthenticatorSelection = AuthenticatorSelection(),
+) : BaseModel(type = "SignUp") {
     @Serializable
     data class Rp(
         val name: String = "PassekyApp",
-        val id: String = BASE_URL.removePrefix("https://")
+        val id: String = BASE_URL.removePrefix("https://"),
     )
 
     @Serializable
@@ -34,20 +40,21 @@ data class CreatePasskeyResponse(
 
     @Serializable
     data class PubKeyCredParams(
-        val type: String = "public-key",
-        val alg: Int = -7
+        val type: String,
+        val alg: Int,
     )
 
     @Serializable
     data class ExcludeCredentials(
         val id: String,
-        val type: String
+        val type: String,
     )
 
     @Serializable
     data class AuthenticatorSelection(
         val authenticatorAttachment: String = "platform",
-        val requireResidentKey: Boolean = false,
+        val requireResidentKey: Boolean = true,
         val residentKey: String = "required",
+        val userVerification: String = "required",
     )
 }

@@ -3,7 +3,7 @@
 
     <string name="asset_statements" translatable="false">
         [{
-          \"include\": \"https://ad3e-103-44-174-1.ngrok-free.app/.well-known/assetlinks.json\"
+          \"include\": \"https://5b74-103-220-209-42.ngrok-free.app/.well-known/assetlinks.json\"
         }]
     </string>
 </resources>
